@@ -79,8 +79,7 @@ function downloadFile() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
-// Function to clear the file list
-function clearRecords() {
-    var fileList = document.getElementById("fileList");
-    fileList.innerHTML = ""; // Clear the inner HTML of the fileList div
+// Function to clear localStorage
+function clearLocalStorage() {
+    localStorage.removeItem("fileEntries"); // Remove the fileEntries data from localStorage
 }
