@@ -1,3 +1,17 @@
+// Initialize variables for tracking changes
+var fileEntries = [];
+var currentIndex = -1;
+
+// Load data from localStorage when the page loads
+window.onload = function() {
+    if (localStorage.getItem("fileEntries")) {
+        fileEntries = JSON.parse(localStorage.getItem("fileEntries"));
+        currentIndex = fileEntries.length - 1;
+        renderList();
+    }
+};
+
+// Function to add an entry
 function addEntry() {
     var fileNameInput = document.getElementById("fileNameInput");
     var urlInput = document.getElementById("urlInput");
@@ -10,17 +24,62 @@ function addEntry() {
         return;
     }
 
-    var listItem = document.createElement("li");
-    listItem.textContent = fileName + " - Free Download By @PandaWep In Telegram.mkv" + ":" + url;
+    // Save the current state for undo/redo
+    saveState();
 
-    document.getElementById("fileList").appendChild(listItem);
+    // Add entry to fileEntries
+    fileEntries.push({ fileName: fileName, url: url });
+
+    // Render the updated list
+    renderList();
 
     // Clear inputs
     fileNameInput.value = "";
     urlInput.value = "";
 }
 
+// Function to render the list
+function renderList() {
+    var fileList = document.getElementById("fileList");
+    fileList.innerHTML = "";
 
+    fileEntries.forEach(function(entry) {
+        var listItem = document.createElement("li");
+        listItem.textContent = entry.fileName + " - Free Download By @PandaWep In Telegram.mkv" + ":" + entry.url;
+        fileList.appendChild(listItem);
+    });
+}
+
+// Function to save the current state for undo/redo
+function saveState() {
+    var currentState = JSON.stringify(fileEntries);
+    localStorage.setItem("fileEntries", currentState);
+    currentIndex = fileEntries.length - 1;
+}
+
+// Function to undo changes
+function undo() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        fileEntries.pop(); // Remove the last entry
+        renderList();
+    }
+}
+
+// Function to redo changes
+function redo() {
+    if (currentIndex < fileEntries.length - 1) {
+        currentIndex++;
+        renderList();
+    }
+}
+
+// Function to prompt user before closing the page
+window.onbeforeunload = function() {
+    return "Are you sure you want to leave?";
+};
+
+// Function to download the file list
 function downloadFile() {
     var listItems = document.querySelectorAll("#fileList li");
     var content = "";
