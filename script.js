@@ -8,7 +8,7 @@ function addEntry() {
     }
 
     var listItem = document.createElement("li");
-    listItem.textContent = fileName + "- Free Download By @PandaWep In Telegram.mkv" + ":" + url;
+    listItem.textContent = fileName + " - Free Download By @PandaWep In Telegram.mkv" + ":" + url;
 
     document.getElementById("fileList").appendChild(listItem);
 
