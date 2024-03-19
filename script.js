@@ -1,7 +1,10 @@
 function addEntry() {
-    var fileName = document.getElementById("fileNameInput").value.trim();
-    var url = document.getElementById("urlInput").value.trim();
-    
+    var fileNameInput = document.getElementById("fileNameInput");
+    var urlInput = document.getElementById("urlInput");
+
+    var fileName = fileNameInput.value.trim().replace(/[:;]/g, ''); // Remove ':' and ';' characters
+    var url = urlInput.value.trim();
+
     if (fileName === "" || url === "") {
         alert("Please enter both file name and URL.");
         return;
@@ -13,9 +16,10 @@ function addEntry() {
     document.getElementById("fileList").appendChild(listItem);
 
     // Clear inputs
-    document.getElementById("fileNameInput").value = "";
-    document.getElementById("urlInput").value = "";
+    fileNameInput.value = "";
+    urlInput.value = "";
 }
+
 
 function downloadFile() {
     var listItems = document.querySelectorAll("#fileList li");
