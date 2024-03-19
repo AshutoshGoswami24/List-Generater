@@ -1,12 +1,10 @@
 // Initialize variables for tracking changes
 var fileEntries = [];
-var currentIndex = -1;
 
 // Load data from localStorage when the page loads
 window.onload = function() {
     if (localStorage.getItem("fileEntries")) {
         fileEntries = JSON.parse(localStorage.getItem("fileEntries"));
-        currentIndex = fileEntries.length - 1;
         renderList();
     }
 };
@@ -24,11 +22,11 @@ function addEntry() {
         return;
     }
 
-    // Save the current state for undo/redo
-    saveState();
-
     // Add entry to fileEntries
     fileEntries.push({ fileName: fileName, url: url });
+
+    // Save the state
+    saveState();
 
     // Render the updated list
     renderList();
@@ -50,28 +48,10 @@ function renderList() {
     });
 }
 
-// Function to save the current state for undo/redo
+// Function to save the state
 function saveState() {
     var currentState = JSON.stringify(fileEntries);
     localStorage.setItem("fileEntries", currentState);
-    currentIndex = fileEntries.length - 1;
-}
-
-// Function to undo changes
-function undo() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        fileEntries.pop(); // Remove the last entry
-        renderList();
-    }
-}
-
-// Function to redo changes
-function redo() {
-    if (currentIndex < fileEntries.length - 1) {
-        currentIndex++;
-        renderList();
-    }
 }
 
 // Function to prompt user before closing the page
