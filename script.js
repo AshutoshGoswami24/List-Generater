@@ -43,7 +43,7 @@ function renderList() {
 
     fileEntries.forEach(function(entry) {
         var listItem = document.createElement("li");
-        listItem.textContent = entry.fileName + " - Free Download By @PandaWep In Telegram.mkv" + ":" + entry.url;
+        listItem.textContent = entry.fileName + " - Free Download By @PandaWep In Telegram" + ":" + entry.url;
         fileList.appendChild(listItem);
     });
 }
