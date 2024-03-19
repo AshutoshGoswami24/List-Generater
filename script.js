@@ -25,10 +25,9 @@ function addEntry() {
 
     // Append file extension based on the selected file type
     var fileExtension = getFileExtension(fileType);
-    fileName += fileExtension;
 
     // Add entry to fileEntries
-    fileEntries.push({ fileName: fileName, url: url });
+    fileEntries.push({ fileName: fileName, fileType: fileExtension, url: url });
 
     // Save the state
     saveState();
@@ -64,8 +63,7 @@ function renderList() {
 
     fileEntries.forEach(function(entry) {
         var listItem = document.createElement("li");
-        var fileFormat = entry.fileName.split('.').pop(); // Extract file format (extension) from file name
-        listItem.textContent = entry.fileName + " - Free Download By @PandaWep in Telegram (" + fileFormat.toUpperCase() + ")" + ":" + entry.url;
+        listItem.textContent = entry.fileName + " - Free Download By @PandaWep in Telegram" + entry.fileType + ":" + entry.url;
         fileList.appendChild(listItem);
     });
 }
