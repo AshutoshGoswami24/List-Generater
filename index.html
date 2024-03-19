@@ -11,6 +11,16 @@
         <h1>File Name URL Tracker</h1>
         <input type="text" id="fileNameInput" placeholder="Enter File Name">
         <input type="text" id="urlInput" placeholder="Enter URL">
+        
+        <label for="fileTypeSelect">Select File Type:</label>
+        <select id="fileTypeSelect">
+            <option value="">Select...</option>
+            <option value="zip">.zip</option>
+            <option value="mkv">.mkv</option>
+            <option value="jpg">.jpg</option>
+            <option value="apk">.apk</option>
+        </select>
+        
         <button onclick="addEntry()">Add</button>
         <button onclick="downloadFile()">Download</button>
         <div id="fileList"></div>
