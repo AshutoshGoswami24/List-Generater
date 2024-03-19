@@ -2,7 +2,7 @@ function addEntry() {
     var fileNameInput = document.getElementById("fileNameInput");
     var urlInput = document.getElementById("urlInput");
 
-    var fileName = fileNameInput.value.trim().replace(/[:;]/g, ''); // Remove ':' and ';' characters
+    var fileName = fileNameInput.value.trim().replace(/[^\w\s]/g, '').replace(/:/g, ''); // Remove non-word characters and ':'
     var url = urlInput.value.trim();
 
     if (fileName === "" || url === "") {
@@ -19,7 +19,6 @@ function addEntry() {
     fileNameInput.value = "";
     urlInput.value = "";
 }
-
 
 function downloadFile() {
     var listItems = document.querySelectorAll("#fileList li");
