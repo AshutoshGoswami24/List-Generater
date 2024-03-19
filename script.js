@@ -1,4 +1,3 @@
-
 var fileEntries = [];
 
 // Load data from localStorage when the page loads
@@ -13,14 +12,20 @@ window.onload = function() {
 function addEntry() {
     var fileNameInput = document.getElementById("fileNameInput");
     var urlInput = document.getElementById("urlInput");
+    var fileTypeSelect = document.getElementById("fileTypeSelect");
 
     var fileName = fileNameInput.value.trim().replace(/[^\w\s]/g, '').replace(/[:]/g, ''); // Remove non-word characters and ':'
     var url = urlInput.value.trim();
+    var fileType = fileTypeSelect.value; // Get the selected file type
 
-    if (fileName === "" || url === "") {
-        alert("Please enter both file name and URL.");
+    if (fileName === "" || url === "" || fileType === "") {
+        alert("Please enter file name, URL, and select file type.");
         return;
     }
+
+    // Append file extension based on the selected file type
+    var fileExtension = getFileExtension(fileType);
+    fileName += fileExtension;
 
     // Add entry to fileEntries
     fileEntries.push({ fileName: fileName, url: url });
@@ -36,6 +41,22 @@ function addEntry() {
     urlInput.value = "";
 }
 
+// Function to get file extension based on file type
+function getFileExtension(fileType) {
+    switch (fileType) {
+        case "zip":
+            return ".zip";
+        case "mkv":
+            return ".mkv";
+        case "jpg":
+            return ".jpg";
+        case "apk":
+            return ".apk";
+        default:
+            return ""; // Handle other file types if necessary
+    }
+}
+
 // Function to render the list
 function renderList() {
     var fileList = document.getElementById("fileList");
@@ -43,7 +64,8 @@ function renderList() {
 
     fileEntries.forEach(function(entry) {
         var listItem = document.createElement("li");
-        listItem.textContent = entry.fileName + " - Free Download By @PandaWep in Telegram" + ":" + entry.url;
+        var fileFormat = entry.fileName.split('.').pop(); // Extract file format (extension) from file name
+        listItem.textContent = entry.fileName + " - Free Download By @PandaWep in Telegram (" + fileFormat.toUpperCase() + ")" + ":" + entry.url;
         fileList.appendChild(listItem);
     });
 }
@@ -79,6 +101,7 @@ function downloadFile() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
+
 // Function to clear localStorage
 function clearLocalStorage() {
     localStorage.removeItem("fileEntries"); // Remove the fileEntries data from localStorage
