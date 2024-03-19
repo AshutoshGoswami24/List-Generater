@@ -1,4 +1,4 @@
-// Initialize variables for tracking changes
+
 var fileEntries = [];
 
 // Load data from localStorage when the page loads
